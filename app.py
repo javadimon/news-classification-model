@@ -54,7 +54,7 @@ def teach():
 
     model_gru.summary()
 
-    model_gru_save_path = 'best_model_gru.h5'
+    model_gru_save_path = 'trained-model/best_model_gru.h5'
     checkpoint_callback_gru = ModelCheckpoint(model_gru_save_path,
                                               monitor='val_accuracy',
                                               save_best_only=True,
