@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 
 def teach():
-    train = pd.read_csv('train.csv',
+    train = pd.read_csv('train-data-source/train.csv',
                         header=None,
                         names=['class', 'title', 'text'])
     print(train)

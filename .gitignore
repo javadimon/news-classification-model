@@ -1,3 +1,3 @@
-classes.txt
-test.csv
-train.csv
+train-data-source/classes.txt
+train-data-source/test.csv
+train-data-source/train.csv
