@@ -75,6 +75,12 @@ def teach():
     plt.legend()
     plt.show()
 
+    test = pd.read_csv('train-data-source/test.csv',
+                       header=None,
+                       names=['class', 'title', 'text'])
+    y_test = np_utils.to_categorical(test['class'] - 1, nb_classes)
+    print(y_test)
+
 
 if __name__ == '__main__':
     print("NEWS")
