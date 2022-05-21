@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def teach():
+def train_model():
     # Максимальное количество слов
     num_words = 10000
     # Максимальная длина новости
@@ -88,5 +88,4 @@ def teach():
 
 
 if __name__ == '__main__':
-    print("NEWS")
-    teach()
+    train_model()
