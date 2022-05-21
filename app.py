@@ -81,6 +81,11 @@ def teach():
     y_test = np_utils.to_categorical(test['class'] - 1, nb_classes)
     print(y_test)
 
+    test_sequences = tokenizer.texts_to_sequences(test['text'])
+    x_test = pad_sequences(test_sequences, maxlen=max_news_len)
+    model_gru.load_weights(model_gru_save_path)
+    model_gru.evaluate(x_test, y_test, verbose=1)
+
 
 if __name__ == '__main__':
     print("NEWS")
