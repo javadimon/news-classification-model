@@ -12,30 +12,45 @@ def load():
     driver = webdriver.Chrome()
     driver.implicitly_wait(0.5)
 
+    class_index = 1
     urls = ["https://habr.com/ru/hub/programming/", "https://habr.com/ru/hub/nix/", "https://habr.com/ru/hub"
                                                                                     "/machine_learning/"]
-    for url in urls:
-        driver.get(url)
+    pages = range(1, 51)
+    for base_url in urls:
+        for page in pages:
+            url = base_url
+            if page > 1:
+                url = base_url + "page" + str(page) + "/"
 
-        # tm-article-snippet__title-link
-        tittles = driver.find_elements(By.CLASS_NAME, "tm-article-snippet__title-link")
-        # tm - article - snippet__hubs
-        contents = driver.find_elements(By.CLASS_NAME, "article-formatted-body")
+            driver.get(url)
 
-        print(len(tittles))
-        print(len(contents))
+            # tm-article-snippet__title-link
+            tittles = driver.find_elements(By.CLASS_NAME, "tm-article-snippet__title-link")
+            # tm - article - snippet__hubs
+            contents = driver.find_elements(By.CLASS_NAME, "article-formatted-body")
 
-        index = 0
-        for content in contents:
-            print(tittles[index].text + "\n")
-            print(content.text)
-            print("\n\n-----------------------------------------------------\n\n")
+            index = 0
+            for content in contents:
+                csv_line = "\"" + str(class_index) + "\",\"" + normalize_string(tittles[index].text) + "\",\"" + normalize_string(content.text) + "\""
+                write_line_to_file(csv_line)
+                index += 1
 
-        timeout = randrange(2, 6, 2)
-        print("Timeout: " + str(timeout))
-        time.sleep(timeout)
+            timeout = randrange(5, 10, 2)
+            print("Timeout: " + str(timeout))
+            time.sleep(timeout)
+
+        class_index += 1
 
     driver.quit()
+
+
+def write_line_to_file(line):
+    with open("train-data-source/train.csv", "a") as file:
+        file.write(line + "\n")
+
+
+def normalize_string(s):
+    return s.replace("\"", "\"\"").replace("$", "\\$")
 
 
 if __name__ == '__main__':

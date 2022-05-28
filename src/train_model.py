@@ -3,7 +3,8 @@ from keras.models import Sequential
 from keras.layers import Dense, Embedding, MaxPooling1D, Conv1D, GlobalMaxPooling1D, Dropout, LSTM, GRU
 from keras import utils
 from keras.utils import np_utils
-from keras.preprocessing.sequence import pad_sequences
+# from keras.preprocessing.sequence import pad_sequences
+from keras_preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.callbacks import ModelCheckpoint
 import pandas as pd
@@ -19,7 +20,7 @@ def train_model():
     # Количество классов новостей
     nb_classes = 4
 
-    train = pd.read_csv('train-data-source/train.csv',
+    train = pd.read_csv('train-data-source/eng/train.csv',
                         header=None,
                         names=['class', 'title', 'text'])
     print(train)
@@ -75,7 +76,7 @@ def train_model():
     plt.legend()
     plt.show()
 
-    test = pd.read_csv('train-data-source/test.csv',
+    test = pd.read_csv('train-data-source/eng/test.csv',
                        header=None,
                        names=['class', 'title', 'text'])
     y_test = np_utils.to_categorical(test['class'] - 1, nb_classes)
