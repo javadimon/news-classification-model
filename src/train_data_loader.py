@@ -34,6 +34,9 @@ def load():
             for content in contents:
                 if index >= len(tittles):
                     break
+                if tittles[index].text == "" or content.text == "":
+                    break
+
                 csv_line = "\"" + str(class_index) + "\",\"" + normalize_string(
                     tittles[index].text) + "\",\"" + normalize_string(content.text) + "\""
                 print(url + " --- " + csv_line)
