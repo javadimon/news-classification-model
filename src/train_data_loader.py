@@ -31,9 +31,11 @@ def load():
 
             index = 0
             for content in contents:
+                if index >= len(tittles):
+                    break
                 csv_line = "\"" + str(class_index) + "\",\"" + normalize_string(tittles[index].text) + "\",\"" + normalize_string(content.text) + "\""
-                write_line_to_file(csv_line)
                 print(url + " --- " + csv_line)
+                write_line_to_file(csv_line)
                 index += 1
 
             timeout = randrange(5, 10, 2)
