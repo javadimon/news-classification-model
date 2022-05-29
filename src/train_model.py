@@ -3,7 +3,6 @@ from keras.models import Sequential
 from keras.layers import Dense, Embedding, MaxPooling1D, Conv1D, GlobalMaxPooling1D, Dropout, LSTM, GRU
 from keras import utils
 from keras.utils import np_utils
-# from keras.preprocessing.sequence import pad_sequences
 from keras_preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.callbacks import ModelCheckpoint
@@ -39,7 +38,6 @@ def train_model():
     index = 1
     print(news[index])
     print(sequences[index])
-    print(tokenizer.word_index['investment'])
 
     x_train = pad_sequences(sequences, maxlen=max_news_len)
 
@@ -47,7 +45,7 @@ def train_model():
     model_gru = Sequential()
     model_gru.add(Embedding(num_words, 32, input_length=max_news_len))
     model_gru.add(GRU(16))
-    model_gru.add(Dense(4, activation='softmax'))
+    model_gru.add(Dense(3, activation='softmax'))
 
     model_gru.compile(optimizer='adam',
                       loss='categorical_crossentropy',
