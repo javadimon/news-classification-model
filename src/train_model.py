@@ -18,9 +18,9 @@ def train_model():
     # Максимальная длина новости
     max_news_len = 30
     # Количество классов новостей
-    nb_classes = 4
+    nb_classes = 3
 
-    train = pd.read_csv('train-data-source/eng/train.csv',
+    train = pd.read_csv('train-data-source/train.csv',
                         header=None,
                         names=['class', 'title', 'text'])
     print(train)
@@ -76,7 +76,7 @@ def train_model():
     plt.legend()
     plt.show()
 
-    test = pd.read_csv('train-data-source/eng/test.csv',
+    test = pd.read_csv('train-data-source/test.csv',
                        header=None,
                        names=['class', 'title', 'text'])
     y_test = np_utils.to_categorical(test['class'] - 1, nb_classes)
