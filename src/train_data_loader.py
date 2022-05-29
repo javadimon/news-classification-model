@@ -59,7 +59,7 @@ def write_line_to_file(line):
 
 
 def normalize_string(s):
-    return s.replace("\"", "\"\"").replace("$", "\\$").replace("\n", " ").replace("\r", " ")
+    return s.replace("\"", "\"\"").replace("$", "\\$").replace("\n", " ").replace("\r", " ").replace("—", " ")
 
 
 def create_test_data():

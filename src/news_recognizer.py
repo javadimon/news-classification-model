@@ -30,9 +30,11 @@ def recognize():
                       loss='categorical_crossentropy',
                       metrics=['accuracy'])
 
-    news = pd.read_csv('train-data-source/real_news.csv',
+    news = pd.read_csv('train-data-source/test.csv',
                        header=None,
                        names=['class', 'title', 'text'])
+    print(news[:5])
+
     y_news = np_utils.to_categorical(news['class'] - 1, nb_classes)
     print(y_news)
 
