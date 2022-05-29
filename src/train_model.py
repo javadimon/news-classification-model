@@ -9,6 +9,7 @@ from keras.callbacks import ModelCheckpoint
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import tensorflow as tf
 
 
 def train_model():
@@ -60,7 +61,7 @@ def train_model():
                                               verbose=1)
     history_gru = model_gru.fit(x_train,
                                 y_train,
-                                epochs=5,
+                                epochs=10,
                                 batch_size=128,
                                 validation_split=0.1,
                                 callbacks=[checkpoint_callback_gru])
@@ -84,6 +85,13 @@ def train_model():
     x_test = pad_sequences(test_sequences, maxlen=max_news_len)
     model_gru.load_weights(model_gru_save_path)
     model_gru.evaluate(x_test, y_test, verbose=1)
+
+    examples = [
+        'Linux',
+        'Java'
+    ]
+    results = tf.sigmoid(model_gru(tf.constant(examples)))
+    print(results)
 
 
 if __name__ == '__main__':
