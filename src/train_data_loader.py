@@ -78,11 +78,6 @@ if __name__ == '__main__':
     # load()
     create_test_data()
 
-# Биржа
-# https://bcs-express.ru/category/rossiyskiy-rynok
-
-# Железо
-# https://www.ixbt.com/news/
 
 # Программирование
 # https://habr.com/ru/hub/programming/
@@ -93,5 +88,16 @@ if __name__ == '__main__':
 # AI / ML
 # https://habr.com/ru/hub/machine_learning/
 
+# News sources:
+
+# Linux
+# https://pingvinus.ru/
+
+# Железо
+# https://www.ixbt.com/news/
+
 #
 # https://www.cnews.ru/
+
+# Биржа
+# https://bcs-express.ru/category/rossiyskiy-rynok
