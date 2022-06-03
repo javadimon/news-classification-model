@@ -1,7 +1,7 @@
 import nltk
 import string
 import pandas as pd
-from nltk.corpus import stopwords
+from collections import Counter
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -13,18 +13,23 @@ def process():
                          header=None,
                          names=['class', 'title', 'description'])
     titles = corpus['title']
-    descriptions = corpus['description']
+    descriptions = corpus['title'] + " " + corpus['description']
     index = 0
+    steams = []
     for description in descriptions:
         if index > 0:
             break
-        for token in tokenize(description):
+        for token in tokenize(description, steams):
             print("process: " + token)
         index += 1
 
+    print("\nEND\nsteams: " + str(steams))
+    counts = Counter(steams)
+    print("\nEND\ncounts: " + str(counts))
+
 
 # Tokenization function
-def tokenize(text):
+def tokenize(text, steams):
     stem = nltk.stem.SnowballStemmer('russian')
     text = text.lower()
     stop_words = nltk.corpus.stopwords.words('russian')
@@ -34,6 +39,7 @@ def tokenize(text):
         if token in string.punctuation: continue
         if token in stop_words: continue
         print("tokenize: " + token)
+        steams.append(stem.stem(token))
         yield stem.stem(token)
 
 
