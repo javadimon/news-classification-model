@@ -7,6 +7,7 @@ nltk.download('punkt')
 nltk.download('stopwords')
 
 
+# Load saved news data
 def process():
     corpus = pd.read_csv('train-data-source/train.csv',
                          header=None,
