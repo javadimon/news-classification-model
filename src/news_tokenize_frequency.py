@@ -7,6 +7,8 @@ from collections import Counter
 
 nltk.download('punkt')
 nltk.download('stopwords')
+snowball_stemmer = nltk.stem.SnowballStemmer('russian')
+stop_words = nltk.corpus.stopwords.words('russian')
 
 
 class NewsTokenizer:
@@ -16,8 +18,8 @@ class NewsTokenizer:
 
 
 # Load saved news data
-def news_data_handler():
-    corpus = pd.read_csv('train-data-source/train.csv',
+def news_data_handler(file_name):
+    corpus = pd.read_csv(file_name,
                          header=None,
                          names=['class', 'title', 'description'])
     steams = []
@@ -27,43 +29,43 @@ def news_data_handler():
     news_all = corpus['title'] + " " + corpus['description']
 
     for news in news_all:
-        # if classes[index] != 1:
-        #     break
         for token in tokenize(news, steams):
             pass
 
-        count = Counter(steams)
-        tokenizers.append(NewsTokenizer(classes[index], count))
+        counter = Counter(steams)
+        tokenizers.append(NewsTokenizer(classes[index], counter))
         steams.clear()
-        # print(tokenizers[0].news_class_name)
-        # print(str(tokenizers[0].counter))
-        # print("\n")
     return tokenizers
 
 
 # Tokenization function
 def tokenize(text, steams):
-    stem = nltk.stem.SnowballStemmer('russian')
     text = text.lower()
-    stop_words = nltk.corpus.stopwords.words('russian')
 
     for token in nltk.word_tokenize(text):
         if token in string.punctuation:
             continue
         if token in stop_words:
             continue
-        # print("tokenize: " + token)
-        steams.append(stem.stem(token))
-        yield stem.stem(token)
+        steams.append(snowball_stemmer.stem(token))
+        yield snowball_stemmer.stem(token)
 
 
-def recognize_news(tokenized_news):
+def recognize_news(tokenized_news, file_name):
     print("Recognizing news...")
+    real_news_tokenizers = news_data_handler(file_name)
+    print("News tokenizers items : " + str(real_news_tokenizers[0].counter.items()))
+    # for tn in tokenized_news:
+    #     for rne in real_news_tokenizers[0].counter.items():
+    #         for tni in tn.counter.items():
+    #             print("DEBUG: " + tni[0] + " " + rne[0])
+    #             if tni[0] == rne[0]:
+    #                 print("YES!")
+
+    # for item in real_news_tokenizers[0].counter.items():
+    #     print("Item: " + item[0] + ": " + str(item[1]))
 
 
 if __name__ == '__main__':
-    print(datetime.now())
-    news_tokenizers = news_data_handler()
-    print(len(news_tokenizers))
-    recognize_news(news_tokenizers)
-    print(datetime.now())
+    news_data_tokenizers = news_data_handler('train-data-source/train.csv')
+    recognize_news(news_data_tokenizers, 'train-data-source/real_news.csv')
