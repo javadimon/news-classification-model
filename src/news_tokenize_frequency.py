@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import nltk
 import string
 import pandas as pd
@@ -14,7 +16,7 @@ class NewsTokenizer:
 
 
 # Load saved news data
-def process():
+def news_data_handler():
     corpus = pd.read_csv('train-data-source/train.csv',
                          header=None,
                          names=['class', 'title', 'description'])
@@ -25,19 +27,18 @@ def process():
     news_all = corpus['title'] + " " + corpus['description']
 
     for news in news_all:
-        if classes[index] != 1:
-            break
+        # if classes[index] != 1:
+        #     break
         for token in tokenize(news, steams):
             pass
 
         count = Counter(steams)
         news_tokenizers.append(NewsTokenizer(classes[index], count))
-        print(news_tokenizers[0].news_class_name)
-        print(str(news_tokenizers[0].counter))
-        print("\n")
-
-    # print(len(counts))
-    # print("\nEND\n" + str(counts[2]))
+        steams.clear()
+        # print(news_tokenizers[0].news_class_name)
+        # print(str(news_tokenizers[0].counter))
+        # print("\n")
+    return news_tokenizers
 
 
 # Tokenization function
@@ -56,5 +57,13 @@ def tokenize(text, steams):
         yield stem.stem(token)
 
 
+def recognize_news(tokenized_news):
+    print("Recognizing news...")
+
+
 if __name__ == '__main__':
-    process()
+    print(datetime.now())
+    news_tokenizers = news_data_handler()
+    print(len(news_tokenizers))
+    recognize_news(news_tokenizers)
+    print(datetime.now())
