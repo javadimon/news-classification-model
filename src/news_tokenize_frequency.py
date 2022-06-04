@@ -21,7 +21,7 @@ def news_data_handler():
                          header=None,
                          names=['class', 'title', 'description'])
     steams = []
-    news_tokenizers = []
+    tokenizers = []
     index = 0
     classes = corpus['class']
     news_all = corpus['title'] + " " + corpus['description']
@@ -33,12 +33,12 @@ def news_data_handler():
             pass
 
         count = Counter(steams)
-        news_tokenizers.append(NewsTokenizer(classes[index], count))
+        tokenizers.append(NewsTokenizer(classes[index], count))
         steams.clear()
-        # print(news_tokenizers[0].news_class_name)
-        # print(str(news_tokenizers[0].counter))
+        # print(tokenizers[0].news_class_name)
+        # print(str(tokenizers[0].counter))
         # print("\n")
-    return news_tokenizers
+    return tokenizers
 
 
 # Tokenization function
