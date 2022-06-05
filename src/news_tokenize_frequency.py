@@ -57,6 +57,9 @@ def recognize_news(tokenized_news, file_name):
     print("Recognizing news...")
     real_news_tokenizers = news_data_handler(file_name)
 
+    positive_counter = 0
+    negative_counter = 0
+    test_news_count = 0
     category_counter = {}
     for rnt in real_news_tokenizers:
         real_news_class = rnt.news_class_name
@@ -66,12 +69,27 @@ def recognize_news(tokenized_news, file_name):
                 for tn_item in tn.counter.items():
                     if rnt_item[0] == tn_item[0] and rnt_item[1] > 1 and tn_item[1] > 1:
                         category_counter[news_class] = category_counter.get(news_class, 0) + 1
-        print(real_news_class)
-        print(category_counter)
-        print("\n")
+
+        max_count = -1
+        max_category = ""
+        for key in category_counter.keys():
+            if category_counter[key] > max_count:
+                max_count = category_counter[key]
+                max_category = key
+
+        print(str(real_news_class) + " - " + max_category + " - " + str((str(real_news_class) == str(max_category))))
+
+        if str(real_news_class) == str(max_category):
+            positive_counter += 1
+        else:
+            negative_counter += 1
+
         category_counter = {}
+        test_news_count += 1
+
+    print("=======================\nAccuracy:" + str(positive_counter / test_news_count))
 
 
 if __name__ == '__main__':
     news_data_tokenizers = news_data_handler('train-data-source/train.csv')
-    recognize_news(news_data_tokenizers, 'train-data-source/real_news.csv')
+    recognize_news(news_data_tokenizers, 'train-data-source/test.csv')
