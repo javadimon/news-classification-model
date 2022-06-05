@@ -22,12 +22,12 @@ def news_data_handler(file_name):
     corpus = pd.read_csv(file_name,
                          header=None,
                          names=['class', 'title', 'description'])
-    steams = []
     tokenizers = []
-    index = 0
+    steams = []
     classes = corpus['class']
     news_all = corpus['title'] + " " + corpus['description']
 
+    index = 0
     for news in news_all:
         for token in tokenize(news, steams):
             pass
@@ -35,6 +35,8 @@ def news_data_handler(file_name):
         counter = Counter(steams)
         tokenizers.append(NewsTokenizer(classes[index], counter))
         steams.clear()
+        index += 1
+
     return tokenizers
 
 
@@ -54,16 +56,17 @@ def tokenize(text, steams):
 def recognize_news(tokenized_news, file_name):
     print("Recognizing news...")
     real_news_tokenizers = news_data_handler(file_name)
-    print("News tokenizers items : " + str(real_news_tokenizers[0].counter.items()))
-    # for tn in tokenized_news:
-    #     for rne in real_news_tokenizers[0].counter.items():
-    #         for tni in tn.counter.items():
-    #             print("DEBUG: " + tni[0] + " " + rne[0])
-    #             if tni[0] == rne[0]:
-    #                 print("YES!")
 
-    # for item in real_news_tokenizers[0].counter.items():
-    #     print("Item: " + item[0] + ": " + str(item[1]))
+    category_counter = {}
+    for rnt in real_news_tokenizers:
+        for tn in tokenized_news:
+            news_class = tn.news_class_name
+            for rnt_item in rnt.counter.items():
+                for tn_item in tn.counter.items():
+                    if rnt_item[0] == tn_item[0] and rnt_item[1] > 1 and tn_item[1] > 1:
+                        category_counter[news_class] = category_counter.get(news_class, 0) + 1
+        print(category_counter)
+        category_counter = {}
 
 
 if __name__ == '__main__':
