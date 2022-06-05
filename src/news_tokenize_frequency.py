@@ -59,13 +59,16 @@ def recognize_news(tokenized_news, file_name):
 
     category_counter = {}
     for rnt in real_news_tokenizers:
+        real_news_class = rnt.news_class_name
         for tn in tokenized_news:
             news_class = tn.news_class_name
             for rnt_item in rnt.counter.items():
                 for tn_item in tn.counter.items():
                     if rnt_item[0] == tn_item[0] and rnt_item[1] > 1 and tn_item[1] > 1:
                         category_counter[news_class] = category_counter.get(news_class, 0) + 1
+        print(real_news_class)
         print(category_counter)
+        print("\n")
         category_counter = {}
 
 
