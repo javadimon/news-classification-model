@@ -1,9 +1,8 @@
-from datetime import datetime
-
-import nltk
 import string
-import pandas as pd
 from collections import Counter
+import nltk
+import pandas as pd
+import json
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -53,6 +52,10 @@ def tokenize(text, steams):
         yield snowball_stemmer.stem(token)
 
 
+def save_model(data):
+    pass
+
+
 def recognize_news(tokenized_news, file_name):
     print("Recognizing news...")
     real_news_tokenizers = news_data_handler(file_name)
@@ -92,4 +95,5 @@ def recognize_news(tokenized_news, file_name):
 
 if __name__ == '__main__':
     news_data_tokenizers = news_data_handler('train-data-source/train.csv')
+    # save_model(news_data_tokenizers)
     recognize_news(news_data_tokenizers, 'train-data-source/test.csv')
