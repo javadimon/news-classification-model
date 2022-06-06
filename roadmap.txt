@@ -1,0 +1,15 @@
+Model
+Save model
+Load model
+
+Train data
+Change Programming from all to detail by language, like Programming Java, Programming Python, Programming C++, etc.
+Add news date
+Append new news by date
+
+Test data
+---
+
+Real news data
+Add news date,
+Add link to full news URL
