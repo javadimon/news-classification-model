@@ -1,6 +1,5 @@
 Model
-Save model
-Load model
+Check if the model is need to be updated
 
 Train data
 Change Programming from all to detail by language, like Programming Java, Programming Python, Programming C++, etc.

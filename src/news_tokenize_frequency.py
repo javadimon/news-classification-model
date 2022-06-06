@@ -2,18 +2,13 @@ import string
 from collections import Counter
 import nltk
 import pandas as pd
-import pickle
+from train_model_store import NewsTokenizer
+import train_model_store
 
 nltk.download('punkt')
 nltk.download('stopwords')
 snowball_stemmer = nltk.stem.SnowballStemmer('russian')
 stop_words = nltk.corpus.stopwords.words('russian')
-
-
-class NewsTokenizer:
-    def __init__(self, news_class_name, counter):
-        self.news_class_name = news_class_name
-        self.counter = counter
 
 
 # Load saved news data
@@ -53,7 +48,11 @@ def tokenize(text, steams):
 
 
 def save_model(data):
-    pass
+    train_model_store.save(data, "trained-model/news_tokenize_frequency.json")
+
+
+def load_model():
+    return train_model_store.load("trained-model/news_tokenize_frequency.json")
 
 
 def recognize_news(tokenized_news, file_name):
@@ -96,4 +95,6 @@ def recognize_news(tokenized_news, file_name):
 if __name__ == '__main__':
     news_data_tokenizers = news_data_handler('train-data-source/train.csv')
     save_model(news_data_tokenizers)
+    t = load_model()
+    print("t[0]: " + str(t[0].news_class_name) + " " + str(t[0].counter.items()))
     # recognize_news(news_data_tokenizers, 'train-data-source/test.csv')
