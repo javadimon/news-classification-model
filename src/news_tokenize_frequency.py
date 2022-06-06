@@ -2,7 +2,7 @@ import string
 from collections import Counter
 import nltk
 import pandas as pd
-import json
+import pickle
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -95,5 +95,5 @@ def recognize_news(tokenized_news, file_name):
 
 if __name__ == '__main__':
     news_data_tokenizers = news_data_handler('train-data-source/train.csv')
-    # save_model(news_data_tokenizers)
-    recognize_news(news_data_tokenizers, 'train-data-source/test.csv')
+    save_model(news_data_tokenizers)
+    # recognize_news(news_data_tokenizers, 'train-data-source/test.csv')
