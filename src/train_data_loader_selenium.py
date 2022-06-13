@@ -60,7 +60,8 @@ def write_line_to_file(line):
 
 
 def normalize_string(s):
-    return s.replace("\"", "\"\"").replace("$", "\\$").replace("\n", " ").replace("\r", " ").replace("—", " ")
+    return s.replace("\"", "\"\"").replace("$", "\\$").replace("\n", " ").replace("\r", " ").replace("—", " ")\
+        .replace("«", "").replace("»", "").replace("“", "").replace("”", "").replace("—", "")
 
 
 if __name__ == '__main__':
