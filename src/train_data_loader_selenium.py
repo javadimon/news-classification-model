@@ -13,7 +13,8 @@ def load():
     driver = webdriver.Chrome()
     driver.implicitly_wait(0.5)
 
-    class_index = 1
+    class_index = 0
+    classes = ["Программирование Java", "Программирование JavaScript", "Программирование Python", "PopSci", "Железо"]
     urls = ["https://habr.com/ru/hub/java/", "https://habr.com/ru/hub/javascript/",
             "https://habr.com/ru/hub/python/", "https://habr.com/ru/hub/popular_science/",
             "https://habr.com/ru/hub/hardware/"]
@@ -38,7 +39,7 @@ def load():
                 if tittles[index].text == "" or content.text == "":
                     break
 
-                csv_line = "\"" + str(class_index) + "\",\"" + normalize_string(
+                csv_line = "\"" + classes[class_index] + "\",\"" + normalize_string(
                     tittles[index].text) + "\",\"" + normalize_string(content.text) + "\""
                 print(url + " --- " + csv_line)
                 write_line_to_file(csv_line)
