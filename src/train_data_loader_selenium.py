@@ -14,8 +14,9 @@ def load():
     driver.implicitly_wait(0.5)
 
     class_index = 1
-    urls = ["https://habr.com/ru/hub/programming/", "https://habr.com/ru/hub/nix/",
-            "https://habr.com/ru/hub/machine_learning/"]
+    urls = ["https://habr.com/ru/hub/java/", "https://habr.com/ru/hub/javascript/",
+            "https://habr.com/ru/hub/python/", "https://habr.com/ru/hub/popular_science/",
+            "https://habr.com/ru/hub/hardware/"]
     pages = range(1, 51)
     for base_url in urls:
         for page in pages:
@@ -53,7 +54,6 @@ def load():
 
 
 def write_line_to_file(line):
-    # with open("train-data-source/train.csv", "a") as file:
     with codecs.open("train-data-source/train.csv", "a", "utf-8") as file:
         file.write(line + "\n")
 
@@ -62,21 +62,8 @@ def normalize_string(s):
     return s.replace("\"", "\"\"").replace("$", "\\$").replace("\n", " ").replace("\r", " ").replace("—", " ")
 
 
-def create_test_data():
-    with codecs.open("train-data-source/train.csv", "r", "utf-8") as file:
-        lines = file.readlines()
-
-        index = 0
-        for line in lines:
-            index = index + 1
-            if index == 15:
-                print(line)
-                index = 0
-
-
 if __name__ == '__main__':
-    # load()
-    create_test_data()
+    load()
 
 
 # Программирование

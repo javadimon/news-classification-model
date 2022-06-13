@@ -1,3 +1,6 @@
+## **Data Loader**
+* Implement RSS reader for real news
+
 ## **Train data**
 
 Change Programming from all to detail by language, like: 
@@ -14,6 +17,5 @@ Check if the model is need to be updated
 
 ## **Real news data**
 
-* Implement RSS reader for real news
 * Add news date
 * Add link to full news URL
