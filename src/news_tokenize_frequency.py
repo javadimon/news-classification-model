@@ -18,16 +18,16 @@ def news_data_handler(file_name):
                          names=['class', 'title', 'description'])
     tokenizers = []
     steams = []
-    classes = corpus['class']
-    news_all = corpus['title'] + " " + corpus['description']
+    all_classes = corpus['class']
+    all_news = corpus['title'] + " " + corpus['description']
 
     index = 0
-    for news in news_all:
+    for news in all_news:
         for token in tokenize(news, steams):
             pass
 
         counter = Counter(steams)
-        tokenizers.append(NewsTokenizer(classes[index], counter))
+        tokenizers.append(NewsTokenizer(all_classes[index], counter))
         steams.clear()
         index += 1
 
