@@ -16,7 +16,7 @@ def news_data_handler(file_name):
     corpus = pd.read_csv(file_name,
                          header=None,
                          names=['class', 'title', 'description'])
-    tokenizers = []
+    tf_model = []
     steams = []
     all_classes = corpus['class']
     all_news = corpus['title'] + " " + corpus['description']
@@ -37,11 +37,11 @@ def news_data_handler(file_name):
 
         optimized_counter = dict(optimized_counter_array)
 
-        tokenizers.append(NewsTokenizer(all_classes[index], optimized_counter))
+        tf_model.append(NewsTokenizer(all_classes[index], optimized_counter))
         steams.clear()
         index += 1
 
-    return tokenizers
+    return tf_model
 
 
 # Tokenization function
@@ -65,17 +65,17 @@ def load_model():
     return train_model_store.load("trained-model/news_tokenize_frequency.json")
 
 
-def recognize_test_news(tokenized_news, file_name):
+def recognize_test_news(news_tf_model, file_name):
     print("Recognizing news...")
-    real_news_tokenizers = news_data_handler(file_name)
+    real_news_tf_model = news_data_handler(file_name)
 
     positive_counter = 0
     negative_counter = 0
     test_news_count = 0
     category_counter = {}
-    for rnt in real_news_tokenizers:
+    for rnt in real_news_tf_model:
         real_news_class = rnt.news_class_name
-        for tn in tokenized_news:
+        for tn in news_tf_model:
             news_class = tn.news_class_name
             for rnt_item in rnt.counter.items():
                 for tn_item in tn.counter.items():
@@ -103,7 +103,7 @@ def recognize_test_news(tokenized_news, file_name):
 
 
 if __name__ == '__main__':
-    news_data_tokenizers = news_data_handler('train-data-source/train.csv')
-    save_model(news_data_tokenizers)
+    # news_data_tokenizers = news_data_handler('train-data-source/train.csv')
+    # save_model(news_data_tokenizers)
     t = load_model()
     recognize_test_news(t, 'train-data-source/test.csv')
