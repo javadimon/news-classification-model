@@ -27,7 +27,17 @@ def news_data_handler(file_name):
             pass
 
         counter = Counter(steams)
-        tokenizers.append(NewsTokenizer(all_classes[index], counter))
+
+        optimized_counter_array = []
+        for c in counter.items():
+            if c[1] == 1:
+                continue
+            else:
+                optimized_counter_array.append(c)
+
+        optimized_counter = dict(optimized_counter_array)
+
+        tokenizers.append(NewsTokenizer(all_classes[index], optimized_counter))
         steams.clear()
         index += 1
 
@@ -48,14 +58,14 @@ def tokenize(text, steams):
 
 
 def save_model(data):
-    train_model_store.save(data, "trained-model/news_tokenize_frequency.json", is_optimize=True)
+    train_model_store.save(data, "trained-model/news_tokenize_frequency.json")
 
 
 def load_model():
     return train_model_store.load("trained-model/news_tokenize_frequency.json")
 
 
-def recognize_news(tokenized_news, file_name):
+def recognize_test_news(tokenized_news, file_name):
     print("Recognizing news...")
     real_news_tokenizers = news_data_handler(file_name)
 
@@ -69,7 +79,7 @@ def recognize_news(tokenized_news, file_name):
             news_class = tn.news_class_name
             for rnt_item in rnt.counter.items():
                 for tn_item in tn.counter.items():
-                    if rnt_item[0] == tn_item[0] and rnt_item[1] > 1 and tn_item[1] > 1:
+                    if rnt_item[0] == tn_item[0]:
                         category_counter[news_class] = category_counter.get(news_class, 0) + 1
 
         max_count = -1
@@ -79,7 +89,7 @@ def recognize_news(tokenized_news, file_name):
                 max_count = category_counter[key]
                 max_category = key
 
-        print(str(real_news_class) + " - " + max_category + " - " + str((str(real_news_class) == str(max_category))))
+        print(str(real_news_class) + " - " + max_category + " - " + str(real_news_class == str(max_category)))
 
         if str(real_news_class) == str(max_category):
             positive_counter += 1
@@ -95,6 +105,5 @@ def recognize_news(tokenized_news, file_name):
 if __name__ == '__main__':
     news_data_tokenizers = news_data_handler('train-data-source/train.csv')
     save_model(news_data_tokenizers)
-    # t = load_model()
-    # print("t[0]: " + str(t[0].news_class_name) + " " + str(t[0].counter.items()))
-    # recognize_news(t, 'train-data-source/test.csv')
+    t = load_model()
+    recognize_test_news(t, 'train-data-source/test.csv')

@@ -7,17 +7,13 @@ class NewsTokenizer:
         self.counter = counter
 
 
-def save(tokenizers, db_file_name, is_optimize=False):
+def save(tokenizers, db_file_name):
     json_data = []
     for tokenizer in tokenizers:
         news_class_name = tokenizer.news_class_name
         tokens = []
         for item in tokenizer.counter.items():
-            if is_optimize and item[1] > 1:
-                tokens.append({"token": item[0], "count": item[1]})
-            elif is_optimize is False:
-                tokens.append({"token": item[0], "count": item[1]})
-
+            tokens.append({"token": item[0], "count": item[1]})
         json_data.append({"news_class_name": news_class_name, "tokens": tokens})
 
     with open(db_file_name, "w", encoding='utf8') as f:
