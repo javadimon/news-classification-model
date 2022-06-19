@@ -48,7 +48,7 @@ def tokenize(text, steams):
 
 
 def save_model(data):
-    train_model_store.save(data, "trained-model/news_tokenize_frequency.json")
+    train_model_store.save(data, "trained-model/news_tokenize_frequency.json", is_optimize=True)
 
 
 def load_model():
@@ -93,8 +93,8 @@ def recognize_news(tokenized_news, file_name):
 
 
 if __name__ == '__main__':
-    # news_data_tokenizers = news_data_handler('train-data-source/train.csv')
-    # save_model(news_data_tokenizers)
-    t = load_model()
+    news_data_tokenizers = news_data_handler('train-data-source/train.csv')
+    save_model(news_data_tokenizers)
+    # t = load_model()
     # print("t[0]: " + str(t[0].news_class_name) + " " + str(t[0].counter.items()))
-    recognize_news(t, 'train-data-source/test.csv')
+    # recognize_news(t, 'train-data-source/test.csv')
