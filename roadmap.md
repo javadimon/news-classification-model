@@ -1,12 +1,6 @@
 ## **Data Loader**
-* Implement RSS reader for real news
 
 ## **Train data**
-
-Change Programming from all to detail by language, like: 
-* Programming Java
-* Programming Python
-* Programming C++, etc.
 
 ## **Model**
 
